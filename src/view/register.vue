@@ -75,49 +75,24 @@
           return
         }
         let newUser = {
-          'username': this.user,
+          'id': this.user,
           'pwd': this.upwd,
           'phone': this.utel,
-          'mail': this.uemail,
+          'mail': this.uemail
         }
         $.ajax({
           type: 'POST',
           url: 'http://localhost:8800/user',
           data: newUser,
           success: function (data) {
+            console.log(this)
+            this.handleRedirectToLogin()
             console.log('添加成功')
-          },
+          }.bind(this),
           error: function (err) {
             console.error(err)
           }
-        })
-
-        // 参数形式   sessionId=09CA5C1EE41A671A2EE6DF6E8E055B33.jvm1&apiCode=register&appSource=android&businessid=Mned40059de2i7voj7co&channel=update&deviceId=355757010002240&isService=1&lname=13311111111&messageType=1&pawstr=1111111&phoneNumber=13311111111&ruleNo=0001&sysaccesstoken=93FB500B88F1E88800F9DD5376C0F553&sysdevicename=Android&systimesparam=1545284668571&tag=register&verifyCode=11111&version=1.0.247
-        // let params = this.$qs.stringify({
-        //   apiCode: 'register',
-        //   appSource: 'android',
-        //   businessid: 'Mned40059de2i7voj7co',
-        //   channel: 'update',
-        //   deviceId: '355757010002240',
-        //   isService: '1',
-        //   lname: this.utel,
-        //   messageType: '1',
-        //   pawstr: this.upwd,
-        //   phoneNumber: this.utel,
-        //   ruleNo: '0001',
-        //   sessionId: '09CA5C1EE41A671A2EE6DF6E8E055B33.jvm1',
-        //   sysaccesstoken: '93FB500B88F1E88800F9DD5376C0F553',
-        //   sysdevicename: 'Android',
-        //   systimesparam: '1545284668571',
-        //   tag: 'register',
-        //   verifyCode: this.umsg,
-        //   version: '1.0.247'
-        // })
-        // this.axios({
-        //   method: 'post',
-        //   url: 'http://gjy.dhgjcloud.com/customize/control/UserServices',
-        //   data: params
-        // }).then(this.handleRegisterGetData.bind(this)) // 处理ajax返回值
+        }).bind(this)
       },
       handleRedirectToLogin () { // 注册成功跳转到登录页面
         this.$router.push({name: 'Login'})

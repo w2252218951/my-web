@@ -31,71 +31,66 @@
                 </div>
             </div>
         </transition>
-
-        <v-dialog :show.sync="dialogShow" title="用户登录" :width="360" :height="80" :confirm-button-show="false" :cancel-button-show="false">
-            <div>
-                <i class="icon-font icon-check-circle add-success"></i>成功加入购物车
-            </div>
-        </v-dialog>
     </div>
 </template>
 
 <script>
-  import axios from 'axios';
-  import Velocity from 'velocity-animate';
-  import vDialog from './dialog'
+  import axios from 'axios'
+  import Velocity from 'velocity-animate'
 
   export default {
     name: 'vHeader',
     components: {
-      vDialog
+
     },
     data () {
       return {
         navData: [],
         childrenData: [],
         childrenShow: false,
-        dialogShow: false
-      };
+      }
     },
-    mounted () {
-      this.getNavData();
-    },
+
     methods: {
       async getNavData () {
-        const { data } = await axios.get('/api/nav');
-        this.navData = data;
-        console.log(data);
+        const { data } = await axios.get('/api/nav')
+        this.navData = data
+        console.log(data)
       },
       User () {
-        this.dialogShow = true
+        this.$router.push(
+          {
+            name:
+            'Login'
+          }
+        )
       },
       showChildren (item) {
-        this.childrenShow = true;
-        this.childrenData = item.children;
+        this.childrenShow = true
+        this.childrenData = item.children
       },
       hideChildren () {
-        this.childrenShow = false;
-        this.childrenData = [];
+        this.childrenShow = false
+        this.childrenData = []
       },
       enter (el) {
-        const timeOut = el.dataset.index * 150;
+        const timeOut = el.dataset.index * 150
         setTimeout(function () {
             Velocity(el, {
               'opacity': 1,
               'translateX': '-50px'
-            });
+            })
           },
           timeOut
-        );
+        )
       },
       goToCategory () {
         this.$router.push({
-          name:"Category"
+          name: 'Category'
         })
       }
     }
-  };
+  }
 </script>
 
 <style lang="less" scoped>

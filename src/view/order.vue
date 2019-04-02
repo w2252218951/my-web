@@ -158,11 +158,11 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex';
-  import axios from 'axios';
-  import mHeader from '../components/header';
-  import mFooter from '../components/footer';
-  import vDialog from '../components/dialog';
+  import { mapGetters, mapMutations } from 'vuex'
+  import axios from 'axios'
+  import mHeader from '../components/header'
+  import mFooter from '../components/footer'
+  import vDialog from '../components/dialog'
 
   export default {
     name: 'order',
@@ -174,39 +174,39 @@
         addressData: [],
         payMode: '',
         dialogShow: false
-      };
+      }
     },
     computed: {
       orderData () {
-        const data = this.$store.state.shopcartData.filter(item => item.checked);
-        return data;
+        const data = this.$store.state.shopcartData.filter(item => item.checked)
+        return data
       },
       ...mapGetters([
         'checkedGoodsPrice'
       ])
     },
     mounted () {
-      this.getAddressData();
+      this.getAddressData()
     },
     methods: {
       ...mapMutations([
         'REMOVE_GOODS'
       ]),
       async getAddressData () {
-        const { data } = await axios.get('/api/addressData');
-        this.addressData = data;
+        const { data } = await axios.get('/api/addressData')
+        this.addressData = data
       },
       checkAddress (val) {
         this.addressData.forEach(item => {
-          item.checked = false;
+          item.checked = false
           if (item.id === val.id) {
-            item.checked = true;
+            item.checked = true
           }
-        });
+        })
       },
       pushOrder () {
-        const date = new Date();
-        const address = this.addressData.filter(item => item.checked)[0];
+        const date = new Date()
+        const address = this.addressData.filter(item => item.checked)[0]
         const data = {
           orderId: date.getTime(),
           address: address,
@@ -214,18 +214,18 @@
           price: this.checkedGoodsPrice,
           time: date,
           payMode: this.payMode
-        };
-        this.REMOVE_GOODS();
-        console.log(data);
-        this.dialogShow = true;
+        }
+        this.REMOVE_GOODS()
+        console.log(data)
+        this.dialogShow = true
       },
       goToIndex () {
         this.$router.push({
           name: 'Index'
-        });
+        })
       }
     }
-  };
+  }
 </script>
 
 <style lang="less" scoped>
